@@ -10,7 +10,6 @@ on:
         default: 'main'
   push:
     branches:
-      - *
   release:
     types: [ created ]
 
