@@ -76,6 +76,7 @@ jobs:
         run: |
           cp -r patch/* .
           python patch.py
+          cat CMakeLists.txt
 
       - name: Install GCC10 and others
         shell: bash
