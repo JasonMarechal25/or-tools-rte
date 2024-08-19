@@ -72,6 +72,7 @@ jobs:
 
       - name: Apply patch
         run: |
+          ls
           cp -r patch/ortools patch/patch.py patch/patch_utils.py patch/patchs .
           python patch.py
 
