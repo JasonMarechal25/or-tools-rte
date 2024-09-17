@@ -14,16 +14,20 @@ if (NOT DEFINED ortools_REF)
 endif ()
 find_package(Python3 REQUIRED COMPONENTS Interpreter Development.Module)
 message("found PYTHON interpreter ${Python_EXECUTABLE} = " ${Python_EXECUTABLE})
+set(FETCHCONTENT_QUIET FALSE)
 FetchContent_Declare(ortools
         GIT_REPOSITORY ${ortools_REPO}
         GIT_TAG ${ortools_REF}
+        USES_TERMINAL_DOWNLOAD TRUE
+        GIT_PROGRESS TRUE
+        GIT_SHALLOW TRUE
         PATCH_COMMAND cp -rf
             ${CMAKE_CURRENT_SOURCE_DIR}/patch.py
             ${CMAKE_CURRENT_SOURCE_DIR}/patch_utils.py
             ${CMAKE_CURRENT_SOURCE_DIR}/ortools
             ${CMAKE_CURRENT_SOURCE_DIR}/cmake_patches
             . && ${Python3_EXECUTABLE} patch.py
-        OVERRIDE_FIND_PACKAGE ON
+        OVERRIDE_FIND_PACKAGE
 )
 message("BUILD_DEPS: " ${BUILD_DEPS})
 set_if_not_defined(BUILD_DEPS "ON" CACHE INTERNAL "")
@@ -34,6 +38,7 @@ set_if_not_defined(USE_SCIP "ON" CACHE INTERNAL "")
 set_if_not_defined(USE_GLPK "ON" CACHE INTERNAL "")
 set_if_not_defined(USE_SIRIUS "OFF" CACHE INTERNAL "")
 FetchContent_MakeAvailable(ortools)
+message("or-tools available")
 find_package(ortools REQUIRED)
 
 add_custom_target(ortools-rte
